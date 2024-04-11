@@ -47,10 +47,8 @@ class Window < Gtk::Window
         @label.override_background_color(0, Gdk::RGBA.new(1, 0, 0, 1))
         @thread.kill if @thread
         rfid
-      
-        
-    	
         false #una vez actualizado el contenido no vuelve a ejecutarse
+      end
       end
     end
     end    
