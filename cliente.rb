@@ -13,7 +13,7 @@ class Window < Gtk::Window
     #Conecta la señal "destroy" de la ventana para cerrar la aplicación
     signal_connect("destroy") do
       Gtk.main_quit
-  ##    @thread.kill if @thread #Detiene la ejecución del thread 
+      @thread.kill if @thread #Detiene la ejecución del thread 
     end
 
     #Crea un contenedor vertical para organizar los objetos
@@ -30,6 +30,20 @@ class Window < Gtk::Window
     lcd = LCDController.new
     texto = @label.text
     lcd.escribir_en_lcd(texto)
+
+    def rfid
+    @rfid = Rfid.new
+    #Crea un thread para leer el uid
+    @thread = Thread.new do
+      #Lee el uid
+      uid = @rfid.read_uid
+      #Actualiza el uid leído
+      GLib::Idle.add do #para asegurar que se realice en el thread principal y evitar problemas de bloqueo
+        @label.set_markup("uid: " + uid)
+    	@label.override_background_color(0, Gdk::RGBA.new(1, 0, 0, 1))
+        false #una vez actualizado el contenido no vuelve a ejecutarse
+      end
+    end
     
   end  
 end
@@ -38,5 +52,5 @@ win = Window.new
 #Muestra todos los objetos de la ventana
 win.show_all
 #Inicia el método rfid
-#win.rfid
+win.rfid
 Gtk.main
