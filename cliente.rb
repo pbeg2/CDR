@@ -39,8 +39,17 @@ class Window < Gtk::Window
       uid = @rfid.read_uid
       #Actualiza el uid leído
       GLib::Idle.add do #para asegurar que se realice en el thread principal y evitar problemas de bloqueo
-        @label.set_markup("uid: " + uid)
-    	@label.override_background_color(0, Gdk::RGBA.new(1, 0, 0, 1))
+      if uid == "60B69521"
+          @nombre = "Pepito"
+          @label.set_markup("Welcome" + #{@nombre})
+      else
+        @label.set_markup("Error")
+        @label.override_background_color(0, Gdk::RGBA.new(1, 0, 0, 1))
+        @thread.kill if @thread
+        rfid
+      
+        
+    	
         false #una vez actualizado el contenido no vuelve a ejecutarse
       end
     end
