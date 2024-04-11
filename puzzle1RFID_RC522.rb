@@ -2,7 +2,7 @@ require 'mfrc522' #libreria necesaria para interectuar con el lector RFID-RC522
 
 class Rfid
         def read_uid
-        puts "Por favor, acerque su tarjeta al lector" #pedimos al usuario que acerque su tarjeta para identificarse
+        #puts "Por favor, acerque su tarjeta al lector" #pedimos al usuario que acerque su tarjeta para identificarse
 
         #intentamos leer la UID de la tarjeta
         begin
