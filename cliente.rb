@@ -41,7 +41,7 @@ class Window < Gtk::Window
       GLib::Idle.add do #para asegurar que se realice en el thread principal y evitar problemas de bloqueo
       if uid == "60B69521"
           @nombre = "Pepito"
-          @label.set_markup("Welcome" + #{@nombre})
+          @label.set_markup("Welcome + #{@nombre}")
       else
         @label.set_markup("Error")
         @label.override_background_color(0, Gdk::RGBA.new(1, 0, 0, 1))
