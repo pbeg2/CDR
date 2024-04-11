@@ -7,7 +7,7 @@ class LCDController
 
   def escribir_en_lcd(texto)
     @display.clear
-    lineas = texto.split("\n")
+    lineas = texto.chars.each_slice(20).map(&:join)
     lineas.each_with_index do |linea, index|
          @display.text(linea[0, 20], index)
     end
