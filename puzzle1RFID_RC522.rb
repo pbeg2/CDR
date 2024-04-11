@@ -29,3 +29,11 @@ class Rfid
 
         end
 end
+
+if __FILE__ == $0 #para inicializar el programa
+
+        rf = Rfid.new #creamos una nueva instancia de Rfid
+        uid = rf.read_uid #método para leer el UID de la tarjeta
+        puts "UID: " + uid #imprimos el UID por pantalla
+
+end
