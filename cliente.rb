@@ -1,7 +1,7 @@
 require "gtk3"
 require "thread"
 require_relative "puzzle1"
-require_relative "lcd"
+require_relative "puzzle1_lcd"
 
 class Window < Gtk::Window
   def initialize
