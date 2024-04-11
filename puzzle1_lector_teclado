@@ -1,9 +1,0 @@
-require 'io/console'
-
-class Rfid
-        def read_uid(data)
-               hex = data.to_i.to_s(16).upcase
-               little_hex = hex.scan(/../).reverse.join('')
-               return little_hex
-        end
-end
