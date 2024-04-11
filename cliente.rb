@@ -38,5 +38,5 @@ win = Window.new
 #Muestra todos los objetos de la ventana
 win.show_all
 #Inicia el método rfid
-win.rfid
+#win.rfid
 Gtk.main
