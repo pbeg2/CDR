@@ -21,7 +21,7 @@ class Window < Gtk::Window
     add(@hbox)
 
     #Crea un Label con el mensaje 
-    @label = Gtk::Label.new("Por favor, acerque su tarjeta al lector")
+    @label = Gtk::Label.new("Please, login with your university card")
     @label.override_background_color(0, Gdk::RGBA.new(0, 0, 1, 1))
     @label.override_color(0, Gdk::RGBA.new(1, 1, 1, 1))
     @label.set_size_request 100, 200
