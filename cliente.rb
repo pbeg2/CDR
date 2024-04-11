@@ -44,7 +44,7 @@ class Window < Gtk::Window
         false #una vez actualizado el contenido no vuelve a ejecutarse
       end
     end
-    
+    end    
   end  
 end
 #Crea una instancia de la clase ventana
