@@ -21,7 +21,7 @@ class Window < Gtk::Window
     add(@hbox)
 
     #Crea un Label con el mensaje 
-    @label = Gtk::Label.new("Please, login with your university card")
+    @label = Gtk::Label.new(" Please, login with your university card")
     @label.override_background_color(0, Gdk::RGBA.new(0, 0, 1, 1))
     @label.override_color(0, Gdk::RGBA.new(1, 1, 1, 1))
     @label.set_size_request 100, 200
@@ -42,6 +42,7 @@ class Window < Gtk::Window
       if uid == "60B69521"
           @nombre = "Pepito"
           @label.set_markup("Welcome #{@nombre}")
+
       else
         @label.set_markup("Error")
         @label.override_background_color(0, Gdk::RGBA.new(1, 0, 0, 1))
