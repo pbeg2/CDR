@@ -1,4 +1,4 @@
-#PRUEBA PARA VERIFICAR LA CONEXIÓN DE LA UID
+#PRUEBA PARA VERIFICAR LA CONEXIÓN CON LA UID
 
 require 'mfrc522' #libreria necesaria para interectuar con el lector RFID-RC522
 require 'json'
@@ -37,7 +37,7 @@ end
 if __FILE__ == $0 #para inicializar el programa
 
         rf = Rfid.new #creamos una nueva instancia de Rfid
-        uid = rf.read_uid #método para leer el UID de la tarjeta
+        uid = rf.read_uid #método para leer la UID de la tarjeta
         puts "UID: #{uid}"
         uri = URI("http://192.168.150.128:9000/students?student_id=#{uid}")
         puts "prueba antes de hacer el response"
@@ -45,6 +45,6 @@ if __FILE__ == $0 #para inicializar el programa
         puts "prueba despues del response"
         if response.code == '200'
           datos = JSON.parse(response.body)
-          puts #{datos.name}
+          puts "#{datos.name}"
         end
 end
