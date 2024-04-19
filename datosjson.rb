@@ -65,7 +65,7 @@ query_entry.signal_connect("activate") do
   when "marks"
     mostrar_datos_json('http://ejemplo.com/marks', 'Marks', ['Asignatura', 'Nombre', 'Nota'])
   when "students"
-    mostrar_datos_json('http://ejemplo.com/marks', 'Students', ['Name'])
+    mostrar_datos_json('http://ejemplo.com/marks', 'Students', ['Nombre'])
   else
     puts "Consulta no valida: #{query}"
   end
