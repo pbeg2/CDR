@@ -1,0 +1,29 @@
+{
+  "Tasks": [
+    {
+      "date": "2024-04-20",
+      "subject": "Matemáticas",
+      "name": "Tarea de Álgebra"
+    },
+    {
+      "date": "2024-04-21",
+      "subject": "Ciencias",
+      "name": "Experimento de Biología"
+    },
+    {
+      "date": "2024-04-21",
+      "subject": "Historia",
+      "name": "Ensayo sobre la Segunda Guerra Mundial"
+    },
+    {
+      "date": "2024-04-22",
+      "subject": "Inglés",
+      "name": "Resumen de la lectura"
+    },
+    {
+      "date": "2024-04-22",
+      "subject": "Arte",
+      "name": "Dibujo creativo"
+    }
+  ]
+}
