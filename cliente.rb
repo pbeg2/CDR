@@ -2,6 +2,8 @@ require "gtk3"
 require "thread"
 require_relative "puzzle1"
 require_relative "puzzle1_lcd"
+require 'json'
+require 'net/http'
 
 class Window < Gtk::Window
   def initialize
@@ -41,8 +43,11 @@ class Window < Gtk::Window
       GLib::Idle.add do #para asegurar que se realice en el thread principal y evitar problemas de bloqueo
      # if uid == "60B69521"
         #  @nombre = "Pepito"
-      @url = http://localhost:9000/students?student_id= + uid
-          @label.set_markup("Welcome #{@nombre}")
+      uri = URI("http://localhost:9000/students?student_id=#{uid}")
+        response = Net::HTTP.get(uri)
+        if response.code == '200'
+          datos = JSON.parse(response.body)
+          @label.set_markup("Welcome #{datos.name}")
 
       else
         @label.set_markup("Error")
