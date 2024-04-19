@@ -1,0 +1,10 @@
+{
+  "students": [
+    { "name": "Juan" },
+    { "name": "María" },
+    { "name": "Pedro" },
+    { "name": "Laura" },
+    { "name": "Carlos" },
+    { "name": "Pepito" }
+  ]
+}
