@@ -1,0 +1,29 @@
+{
+  "Marks": [
+    {
+      "subject": "Matemáticas",
+      "name": "Examen parcial",
+      "mark": "8.5"
+    },
+    {
+      "subject": "Ciencias",
+      "name": "Prueba de laboratorio",
+      "mark": "9.0"
+    },
+    {
+      "subject": "Historia",
+      "name": "Ensayo final",
+      "mark": "7.8"
+    },
+    {
+      "subject": "Inglés",
+      "name": "Presentación oral",
+      "mark": "9.2"
+    },
+    {
+      "subject": "Arte",
+      "name": "Proyecto de pintura",
+      "mark": "8.0"
+    }
+  ]
+}
