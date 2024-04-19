@@ -59,11 +59,13 @@ query_entry.signal_connect("activate") do
 
   case query
   when "timetables"
-    mostrar_datos_json('http://ejemplo.com/horario', 'horario', ['Di­a', 'Hora', 'Materia', 'Aula'])
+    mostrar_datos_json('http://ejemplo.com/horario', 'Horario', ['Di­a', 'Hora', 'Materia', 'Aula'])
   when "tasks"
     mostrar_datos_json('http://ejemplo.com/tasks', 'Tasks', ['Fecha', 'Materia', 'Nombre'])
   when "marks"
     mostrar_datos_json('http://ejemplo.com/marks', 'Marks', ['Asignatura', 'Nombre', 'Nota'])
+  when "students"
+    mostrar_datos_json('http://ejemplo.com/marks', 'Students', ['Name'])
   else
     puts "Consulta no valida: #{query}"
   end
