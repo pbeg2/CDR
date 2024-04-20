@@ -24,6 +24,7 @@ class Ventana
   def mostrar_ventana(ventana)
     ventana.show_all
   end
+end
   
 
 
