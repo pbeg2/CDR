@@ -114,6 +114,13 @@ class MainWindow < Gtk::Window
 		@window.add(@table)
         @window.show_all
     end
+    def timeout
+	GLib::Timeout.add_seconds(20) do
+          puts "Se han superado los 20 segundos."
+          ventana_inicio # Llamar al método ventana_inicio si se supera el tiempo límite
+          false 	          # Importante: Devolver false para que el temporizador no se repita
+	end
+    end
 
     def tabla_informacion(query)
 
@@ -135,15 +142,6 @@ class MainWindow < Gtk::Window
 	timeout
     end
 
-    def timeout
-	GLib::Timeout.add_seconds(20) do
-          puts "Se han superado los 20 segundos."
-          ventana_inicio # Llamar al método ventana_inicio si se supera el tiempo límite
-    false 	          # Importante: Devolver false para que el temporizador no se repita
-    end
-       
-    
-    
 
 end
 
