@@ -175,7 +175,7 @@ class MainWindow < Gtk::Window
         # Encabezados
         headers.each_with_index do |encabezado, index|
             header_label = Gtk::Label.new(encabezado)
-            header_label.override_background_color(:normal, Gdk::RGBA.new(0.0, 0.0, 0.5, 1.0)) # Azul oscuro
+            header_label.override_background_color(:normal, Gdk::RGBA.new(1.0, 1.0, 0.0, 1.0)) # Azul oscuro
             grid.attach(header_label, index, 0, 1, 1)
         end
       
