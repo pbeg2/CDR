@@ -7,9 +7,12 @@ def mostrar_datos_json(url, titulo, headers)
   uri = URI(url) 
   #peticion 
   json_content = Net::HTTP.get(uri)
-  # Parsear el JSON
-  datos = JSON.parse(json_content)
-
+  if  json_content.code == '200'
+    # Parsear el JSON
+      datos = JSON.parse(json_content)
+  else
+      puts "Error: #{response.code}"   
+  end
   # Obtener la lista correspondiente segÃºn el tÃ­tulo
   lista = datos[titulo]
 
@@ -28,6 +31,7 @@ def mostrar_datos_json(url, titulo, headers)
   # Encabezados
   headers.each_with_index do |encabezado, index|
     header_label = Gtk::Label.new(encabezado)
+    header_label.override_background_color(:normal, Gdk::RGBA.new(0.0, 0.0, 0.5, 1.0)) # Azul oscuro
     grid.attach(header_label, index, 0, 1, 1)
   end
 
@@ -36,6 +40,12 @@ def mostrar_datos_json(url, titulo, headers)
     item.each_with_index do |(_, value), column_index|
       tarea_label = Gtk::Label.new(value.to_s)
       grid.attach(tarea_label, column_index, row_index + 1, 1, 1)
+      if row_index % 2 == 0
+              tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.7, 0.7, 1.0, 1.0)) # Azul claro
+      else
+              tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul más oscuro
+      
+      end
     end
   end
 
@@ -43,7 +53,7 @@ def mostrar_datos_json(url, titulo, headers)
   ventana.show_all
 end
 
-##def ejecutar
+def ejecutar_todo
 # Crear la ventana principal
 window = Gtk::Window.new
 window.set_title("Consulta de archivos JSON")
@@ -80,4 +90,4 @@ window.show_all
 # Iniciar el ciclo principal de eventos
 Gtk.main
 
-#end
+end
