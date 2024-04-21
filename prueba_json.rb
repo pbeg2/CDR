@@ -41,7 +41,6 @@ if __FILE__ == $0 #para inicializar el programa
         uid = rf.read_uid #método para leer la UID de la tarjeta
         puts "UID: #{uid}"
         #inicializar datosjson
-        #ejecutar
         uri = URI("http://192.168.150.128:9000/students?student_id=#{uid}")
         puts "prueba antes de hacer el response"
         response = Net::HTTP.get(uri)
