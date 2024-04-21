@@ -70,11 +70,11 @@ query_entry.signal_connect("activate") do
 
   case query
   when "timetables"
-    mostrar_datos_json('http://192.168.150.128:9000/horario', 'Horario', ['Di­a', 'Hora', 'Materia', 'Aula'])
+    mostrar_datos_json('http://192.168.150.128:9000/horario', 'horario', ['Di­a', 'Hora', 'Materia', 'Aula'])
   when "tasks"
-    mostrar_datos_json('http://192.168.150.128:9000/tasks', 'Tasks', ['Fecha', 'Materia', 'Nombre'])
+    mostrar_datos_json('http://192.168.150.128:9000/tasks', 'tasks', ['Fecha', 'Materia', 'Nombre'])
   when "marks"
-    mostrar_datos_json('http://192.168.150.128:9000/marks', 'Marks', ['Asignatura', 'Nombre', 'Nota'])
+    mostrar_datos_json('http://192.168.150.128:9000/marks', 'marks', ['Asignatura', 'Nombre', 'Nota'])
   else
     puts "Consulta no valida: #{query}"
   end
