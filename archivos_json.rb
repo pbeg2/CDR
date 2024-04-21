@@ -57,13 +57,13 @@ query_entry.signal_connect("activate") do
 
   case query
   when "timetable"
-    mostrar_datos_json('horario2.json', 'horario', ['DÃ­a', 'Hora', 'Materia', 'Aula'])
+    mostrar_datos_json('horario2.json', 'horario', ['Dia', 'Hora', 'Materia', 'Aula'])
   when "tasks"
     mostrar_datos_json('tasks.json', 'Tasks', ['Fecha', 'Materia', 'Nombre'])
   when "marks"
     mostrar_datos_json('marks.json', 'Marks', ['Asignatura', 'Nombre', 'Nota'])
   else
-    puts "Consulta no vÃ¡lida: #{query}"
+    puts "Consulta no valida: #{query}"
   end
 
   # Limpiar el campo de entrada despues de la consulta
