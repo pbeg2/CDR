@@ -19,13 +19,9 @@ class Rfid
 
                 end
 
-        #convertimos el UID obtenido en hexadecimal y lo concatenamos en una cadena
-        uid = Array.new
-                uid_dec.length.times do |i|
-                        uid[i]=uid_dec[i].to_s(16)
-                end
-
-                return uid.join().upcase #retornamos el UID en mayusculas
+       # Convertimos el UID obtenido en hexadecimal y lo concatenamos en una cadena
+        uid = uid_dec.map { |dec| dec.to_s(16) }
+        return uid.join('').upcase # Retornamos el UID en mayúsculas
 
         end
 end
