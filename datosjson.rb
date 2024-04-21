@@ -90,4 +90,3 @@ window.show_all
 
 # Iniciar el ciclo principal de eventos
 Gtk.main
-
