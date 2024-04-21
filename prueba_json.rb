@@ -46,5 +46,7 @@ if __FILE__ == $0 #para inicializar el programa
         if response.code == '200'
           datos = JSON.parse(response.body)
           puts "#{datos.name}"
+        else
+          puts "Error: #{response.code}"
         end
 end
