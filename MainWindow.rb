@@ -4,34 +4,25 @@ require_relative 'Rfid'
 
 class MainWindow < Gtk::Window
     def initialize(lcd_controller)
-        @lcd_controller = lcd_controller # Crear la instancia de LCDController
-        
+        @lcd_controller = lcd_controller # Crear la instancia de LCDController        
         @window = Gtk::Window.new("course_manager.rb")
-        @window.set_default_size(500, 200) # Configurar el tamaño de la ventana
-        
-        
-        
+        @window.set_default_size(500, 200) # Configurar el tamaño de la ventana   
         # Conectar la señal "destroy" para cerrar la aplicación cuando se cierra la ventana
         @window.signal_connect("destroy") do
             Gtk.main_quit
             @thread.kill if @thread #Detiene la ejecución del thread
         end 
-
         ventana_inicio # Crear el contenido de la ventana_inicio
-        
-
     end   
 
     def ventana_inicio
         # Crear un marco para enmarcar el mensaje
         @frame = Gtk::Frame.new
         @frame.set_border_width(10)
-        @frame.override_background_color(:normal, Gdk::RGBA.new(0, 0, 1, 1)) # Color azul
-        
+        @frame.override_background_color(:normal, Gdk::RGBA.new(0, 0, 1, 1)) # Color azul        
         # Crear un contenedor Gtk::Box dentro del marco para organizar verticalmente
         box = Gtk::Box.new(:vertical, 5)
         @frame.add(box)
-
         # Mensaje antes de la autenticación
         @label = Gtk::Label.new("Please, login with your university card")
         @label.override_color(:normal, Gdk::RGBA.new(1, 1, 1, 1)) # Color blanco
@@ -116,18 +107,16 @@ class MainWindow < Gtk::Window
         @window.show_all
     end
 	
-    def timeout
-	GLib::Timeout.add_seconds(20) do
-          puts "Se han superado los 20 segundos."
-          ventana_inicio # Llamar al método ventana_inicio si se supera el tiempo límite
-          false 	          # Importante: Devolver false para que el temporizador no se repita
-	end
-    end
+#    def timeout
+#	GLib::Timeout.add_seconds(20) do
+#          puts "Se han superado los 20 segundos."
+#          ventana_inicio # Llamar al método ventana_inicio si se supera el tiempo límite
+#          false 	          # Importante: Devolver false para que el temporizador no se repita
+#	end
+#    end
 
     def tabla_informacion(query)
-
-        case query
-      
+        case query      
         when "timetables"
             mostrar_datos_json('http://ejemplo.com/horario', 'Timetables', ['Di­a', 'Hora', 'Materia', 'Aula'])
         when "tasks"
@@ -135,16 +124,14 @@ class MainWindow < Gtk::Window
         when "marks"
             mostrar_datos_json('http://ejemplo.com/marks', 'Marks', ['Asignatura', 'Nombre', 'Nota'])
         else
-	    timeout
+#	    timeout
             puts "Consulta no valida: #{query}"
         end
       
         query_entry.text = "" # Limpiar el campo de entrada despues de la consulta
         #reiniciar timeout
-	timeout
+#	timeout
     end
-
-
 end
 
 lcd_controller = LCDController.new # Crear una instancia de LCDController
@@ -155,14 +142,13 @@ Gtk.main
 
     def ventana_query
         #empezar timeout
-	timeout
+#	timeout
         @frame.destroy
         # Mostrar el mensaje en la LCD
         @lcd_controller.escribir_en_lcd_centrado("Welcome #{@nombre}")
 
         @nombre = Gtk::Label.new("Welcome #{@nombre}")
         
-    
         # Crear el campo de entrada para el query
         @query_entry = Gtk::Entry.new
         @query_entry.set_placeholder_text("Ingrese query (timetable, tasks, marks)")
@@ -190,9 +176,7 @@ Gtk.main
     end
     
     def tabla_informacion(query)
-
-        case query
-      
+        case query      
         when "timetables"
             mostrar_datos_json('http://ejemplo.com/horario', 'Timetables', ['Di­a', 'Hora', 'Materia', 'Aula'])
         when "tasks"
@@ -203,13 +187,11 @@ Gtk.main
 	    timeout
             puts "Consulta no valida: #{query}"
         end
-      
+     
         query_entry.text = "" # Limpiar el campo de entrada despues de la consulta
         #reiniciar timeout
-	timeout
+#	timeout
     end
-
-
 end
 
 lcd_controller = LCDController.new # Crear una instancia de LCDController
