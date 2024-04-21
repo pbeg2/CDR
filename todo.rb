@@ -1,10 +1,9 @@
+require "gtk3"
 require "thread"
-require 'net/http'
-require 'json'
-require 'gtk3'
 require_relative 'LCDController'
 require_relative 'Rfid'
-
+require 'json'
+require 'net/http'
 
 class MainWindow < Gtk::Window
     def initialize(lcd_controller)
@@ -77,7 +76,7 @@ class MainWindow < Gtk::Window
         student = datos["students"].first
         puts student["name"]
         
-        if student["name"] == "0"
+        if datos["error"]
             @lcd_controller.escribir_en_lcd("Authentication error please try again.")
             @label.set_markup("Authentication error, please try again.")
             @frame.override_background_color(:normal, Gdk::RGBA.new(1, 0, 0, 1)) # Color azul
@@ -148,15 +147,17 @@ class MainWindow < Gtk::Window
         # Obtener los datos JSON desde la URL
         uri = URI(url)
         json_content = Net::HTTP.get(uri)
-      
+        
         #if json_content.code == '200'
-          # Parsear el JSON
-          datos = JSON.parse(json_content)
+        # Parsear el JSON
+        datos = JSON.parse(json_content)
         #else
-         # puts "Error: #{json_content.code}"
-          #return
+        # puts "Error: #{json_content.code}"
+        #return
         #end
-      
+        if datos["error"]
+            @texto_error = Gtk::Label.new("Consulta no válida")
+        end
         # Obtener la lista correspondiente según el título
         lista = datos[titulo]
       
@@ -175,13 +176,16 @@ class MainWindow < Gtk::Window
         # Encabezados
         headers.each_with_index do |encabezado, index|
             header_label = Gtk::Label.new(encabezado)
-            header_label.override_background_color(:normal, Gdk::RGBA.new(1.0, 1.0, 0.0, 1.0)) # Azul oscuro
+            header_label.override_background_color(:normal, Gdk::RGBA.new(0.95, 0.95, 0.5, 1.0)) # amarillo 
             grid.attach(header_label, index, 0, 1, 1)
         end
       
         # Acceder a los datos y mostrar información sobre cada uno
         lista.each_with_index do |item, row_index|
-            item.each_with_index do |(_, value), column_index|
+            item.each_with_index do |(key, value), column_index|
+
+                    next if column_index == item.size - 1
+
                     tarea_label = Gtk::Label.new(value.to_s)
                     grid.attach(tarea_label, column_index, row_index + 1, 1, 1)
                     if row_index % 2 == 0
