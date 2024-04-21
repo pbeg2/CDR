@@ -8,7 +8,7 @@ def mostrar_datos_json(nombre_archivo, titulo, headers)
   # Parsear el JSON
   datos = JSON.parse(json_content)
 
-  # Obtener la lista correspondiente segÃºn el tÃ­tulo
+  # Obtener la lista correspondiente segun el titulo
   lista = datos[titulo]
 
   # Crear la ventana para mostrar los datos
@@ -29,7 +29,7 @@ def mostrar_datos_json(nombre_archivo, titulo, headers)
     grid.attach(header_label, index, 0, 1, 1)
   end
 
-  # Acceder a los datos y mostrar informaciÃ³n sobre cada uno
+  # Acceder a los datos y mostrar informacion sobre cada uno
   lista.each_with_index do |item, row_index|
     item.each_with_index do |(_, value), column_index|
       tarea_label = Gtk::Label.new(value.to_s)
@@ -66,7 +66,7 @@ query_entry.signal_connect("activate") do
     puts "Consulta no vÃ¡lida: #{query}"
   end
 
-  # Limpiar el campo de entrada despuÃ©s de la consulta
+  # Limpiar el campo de entrada despues de la consulta
   query_entry.text = ""
 end
 
