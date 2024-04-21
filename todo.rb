@@ -33,7 +33,7 @@ class MainWindow < Gtk::Window
       label = Gtk::Label.new("Please, login with your university card")
       label.override_color(:normal, Gdk::RGBA.new(1, 1, 1, 1)) # Color blanco
       label.set_halign(:center) # Centrar el texto horizontalmente en la etiqueta
-      box.pack_start(@label, expand: true, fill: true, padding: 10)
+       grid.attach(label, 0, 0, 1, 1)
 
       @lcd_controller.escribir_en_lcd(" Please, login with your university card") # Mostrar el mensaje inicial en la LCD
       add(@frame) # Agregar el marco a la ventana
@@ -59,9 +59,9 @@ class MainWindow < Gtk::Window
 
   def autenticacion(uid)
       uri = URI("http://172.20.10.10:9000/students?student_id=#{uid}") #peticion
-	    response = Net::HTTP.get(uri)
+      response = Net::HTTP.get(uri)
       datos=JSON.parse(response)
-	    student = datos["students"].first #accedemos a los datos
+      student = datos["students"].first #accedemos a los datos
       puts student["name"]
       
       if student
@@ -117,7 +117,7 @@ class MainWindow < Gtk::Window
     grid.attach(button, 1, 0, 1, 1)
     grid.attach(query_entry, 0, 1, 2, 1)
 		
-		add(grid)
+    add(grid)
     show_all
   end
 
