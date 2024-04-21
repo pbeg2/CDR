@@ -71,6 +71,7 @@ def mostrar_datos_json(url, titulo, headers)
   # Encabezados
   headers.each_with_index do |encabezado, index|
     header_label = Gtk::Label.new(encabezado)
+    header_label.override_background_color(:normal, Gdk::RGBA.new(0.0, 0.0, 0.5, 1.0)) # Azul oscuro
     grid.attach(header_label, index, 0, 1, 1)
   end
 
@@ -79,6 +80,12 @@ def mostrar_datos_json(url, titulo, headers)
     item.each_with_index do |(_, value), column_index|
       tarea_label = Gtk::Label.new(value.to_s)
       grid.attach(tarea_label, column_index, row_index + 1, 1, 1)
+      if row_index % 2 == 0
+              tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.7, 0.7, 1.0, 1.0)) # Azul claro
+      else
+              tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul más oscuro
+      
+      end
     end
   end
 
