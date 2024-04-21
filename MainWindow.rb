@@ -81,7 +81,7 @@ class MainWindow < Gtk::Window
 
     def ventana_query
         #empezar timeout
-
+	timeout
         @frame.destroy
         # Mostrar el mensaje en la LCD
         @lcd_controller.escribir_en_lcd_centrado("Welcome #{@nombre}")
@@ -126,16 +126,23 @@ class MainWindow < Gtk::Window
         when "marks"
             mostrar_datos_json('http://ejemplo.com/marks', 'Marks', ['Asignatura', 'Nombre', 'Nota'])
         else
+	    timeout
             puts "Consulta no valida: #{query}"
         end
       
         query_entry.text = "" # Limpiar el campo de entrada despues de la consulta
         #reiniciar timeout
+	timeout
     end
 
     def timeout
-        ventana_inicio
+	GLib::Timeout.add_seconds(20) do
+          puts "Se han superado los 20 segundos."
+          ventana_inicio # Llamar al método ventana_inicio si se supera el tiempo límite
+    false 	          # Importante: Devolver false para que el temporizador no se repita
     end
+       
+    
     
 
 end
