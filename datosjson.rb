@@ -43,6 +43,7 @@ def mostrar_datos_json(url, titulo, headers)
   ventana.show_all
 end
 
+##def ejecutar
 # Crear la ventana principal
 window = Gtk::Window.new
 window.set_title("Consulta de archivos JSON")
@@ -78,3 +79,5 @@ window.show_all
 
 # Iniciar el ciclo principal de eventos
 Gtk.main
+
+#end
