@@ -3,22 +3,21 @@
 require 'mfrc522' #libreria necesaria para interectuar con el lector RFID-RC522
 require 'json'
 require 'net/http'
-require_relative 'datosjson'
 
 class Rfid
         def read_uid
-        #puts "Por favor, acerque su tarjeta al lector" #pedimos al usuario que acerque su tarjeta para identificarse
+        #puts "Por favor, acerque su tarjeta al lector" #pedimos al usuario que acerque su tarjeta par>
 
         #intentamos leer la UID de la tarjeta
         begin
 
                 r = MFRC522.new #creamos una nueva instancia de MFRC522
 
-                r.picc_request(MFRC522::PICC_REQA) #enviamos una solicitud a la RFID para establecer comunicación
+                r.picc_request(MFRC522::PICC_REQA) #enviamos una solicitud a la RFID para establecer c>
 
-                uid_dec, _ = r.picc_select #intentamos leer la UID y almacenamos a la variable "uid_dec"
+                uid_dec, _ = r.picc_select #intentamos leer la UID y almacenamos a la variable "uid_de>
 
-                rescue CommunicationError #capturamos la excepcion en caso de error de lectura o timeout
+                rescue CommunicationError #capturamos la excepcion en caso de error de lectura o timeo>
 
                         retry #volvemos a intentarlo
 
@@ -41,14 +40,10 @@ if __FILE__ == $0 #para inicializar el programa
         uid = rf.read_uid #método para leer la UID de la tarjeta
         puts "UID: #{uid}"
         #inicializar datosjson
-        uri = URI("http://192.168.150.128:9000/students?student_id=#{uid}")
+        uri = URI("http://172.20.10.10:9000/students?student_id=#{uid}")
         puts "prueba antes de hacer el response"
         response = Net::HTTP.get(uri)
         puts "prueba despues del response"
-        if response.code == '200'
-          datos = JSON.parse(response.body)
-          puts "#{datos.name}"
-        else
-          puts "Error: #{response.code}"
-        end
-end
+        datos = JSON.parse(response)
+        student = datos["students"].first
+        puts student["name"]
