@@ -7,13 +7,13 @@ def mostrar_datos_json(url, titulo, headers)
   uri = URI(url)
   json_content = Net::HTTP.get(uri)
 
-  if json_content.code == '200'
+  #if json_content.code == '200'
     # Parsear el JSON
     datos = JSON.parse(json_content)
-  else
-    puts "Error: #{json_content.code}"
-    return
-  end
+  #else
+   # puts "Error: #{json_content.code}"
+    #return
+  #end
 
   # Obtener la lista correspondiente según el título
   lista = datos[titulo]
@@ -27,7 +27,8 @@ def mostrar_datos_json(url, titulo, headers)
   grid = Gtk::Grid.new
   grid.set_row_spacing(5)
   grid.set_column_spacing(5)
-  ventana.add(grid)
+
+   ventana.add(grid)
 
   # Encabezados
   headers.each_with_index do |encabezado, index|
@@ -44,7 +45,7 @@ def mostrar_datos_json(url, titulo, headers)
       if row_index % 2 == 0
         tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.7, 0.7, 1.0, 1.0)) # Azul claro
       else
-        tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul más oscuro
+        tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul más o>
       end
     end
   end
@@ -52,7 +53,6 @@ def mostrar_datos_json(url, titulo, headers)
   # Mostrar todo
   ventana.show_all
 end
-
 # Crear la ventana principal
 window = Gtk::Window.new
 window.set_title("Consulta de archivos JSON")
@@ -69,7 +69,7 @@ query_entry.signal_connect("activate") do
 
   case query
   when "timetables"
-    mostrar_datos_json('http://172.20.10.10:9000/horario', 'horario', ['Día', 'Hora', 'Materia', 'Aula'])
+    mostrar_datos_json('http://172.20.10.10:9000/timetables', 'timetables', ['Día', 'Hora', 'Materia',>
   when "tasks"
     mostrar_datos_json('http://172.20.10.10:9000/tasks', 'tasks', ['Fecha', 'Materia', 'Nombre'])
   when "marks"
