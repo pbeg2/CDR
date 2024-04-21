@@ -143,9 +143,11 @@ class MainWindow < Gtk::Window
     end
 
     def autenticacion(uid)
-        
-        if @uid == "60B69521"
-            @nombre = "Pepito"
+        uri =URI("http://192.168.150.128:9000/students?student_id=#{uid}")
+	response = NET::HTTP.get(uri)
+        if response.code == '200'
+            datos=JSON.parse(response.body)
+	    puts "#{datos.name}"
             ventana_query 
         else 
             @lcd_controller.escribir_en_lcd("Authentication error please try again.")
