@@ -27,12 +27,12 @@ class MainWindow < Gtk::Window
     end   
 
     def ventana_inicio
-        @window.children.each{|widget| @window.remove(widget)}
+        @window.children.each{|widget| @window.remove(widget)} #eliminar widgets
         # Crear un marco para enmarcar el mensaje
         @frame = Gtk::Frame.new
         @frame.set_border_width(10)
         @frame.override_background_color(:normal, Gdk::RGBA.new(0, 0, 1, 1)) # Color azul
-        
+       
         # Crear un contenedor Gtk::Box dentro del marco para organizar verticalmente
         box = Gtk::Box.new(:vertical, 5)
         @frame.add(box)
@@ -95,8 +95,7 @@ class MainWindow < Gtk::Window
     
         @frame.destroy
         # Mostrar el mensaje en la LCD
-        @lcd_controller.escribir_en_lcd_centrado("Welcome #{@nombre}")
-    
+        @lcd_controller.escribir_en_lcd_centrado("Welcome #{@nombre}")    
         @nombre = Gtk::Label.new("Welcome #{@nombre}")
     
         # Crear el campo de entrada para el query
@@ -120,28 +119,26 @@ class MainWindow < Gtk::Window
             when "marks"
                 mostrar_datos_json('http://172.20.10.10:9000/marks', 'marks', ['Subject', 'Name', 'Mark'])
             else
+		@query_error = Gtk::Label.new("Consulta no válida")
+		@query_error.override_color(:normal, Gdk::RGBA.new(1.0, 0.0, 0.0, 1.0)) #color rojo
                 puts "Consulta no válida: #{query}"
             end  
             @query_entry.text = "" # Limpiar el campo de entrada después de la consulta
         end
 
-       
-    
-        @table = Gtk::Table.new(2,2,false) 
-		@table.set_column_spacing(300) 
-		@table.set_row_spacings(5) 
+        @table = Gtk::Table.new(2,2,false)
+	#@table = Gtk::Table.new(3,2,false)
+	@table.set_column_spacing(300) 
+	@table.set_row_spacings(5) 
 
         @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 0)
-		@table.attach(@button, 1,  2,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
-		@table.attach(@query_entry, 0,  2,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
+	@table.attach(@button, 1,  2,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
+	@table.attach(@query_entry, 0,  2,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
+	#@table.attach(@query_error, 0,  3,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
 		
-		@window.add(@table)
+	@window.add(@table)
         @window.show_all
     end
-    
-    #def tabla_informacion(query)
-        
-    #end
 
     def mostrar_datos_json(url, titulo, headers)
         # Obtener los datos JSON desde la URL
@@ -156,7 +153,7 @@ class MainWindow < Gtk::Window
         #return
         #end
         if datos["error"]
-            @texto_error = Gtk::Label.new("Consulta no válida")
+            @texto_error = Gtk::Label.new("No hay información")
         end
         # Obtener la lista correspondiente según el título
         lista = datos[titulo]
@@ -173,25 +170,23 @@ class MainWindow < Gtk::Window
       
          ventana.add(grid)
       
-        # Encabezados
+        # Recorremos encabezados y lo añadimos a la ventana como labels
         headers.each_with_index do |encabezado, index|
             header_label = Gtk::Label.new(encabezado)
-            header_label.override_background_color(:normal, Gdk::RGBA.new(0.95, 0.95, 0.5, 1.0)) # amarillo 
+            header_label.override_background_color(:normal, Gdk::RGBA.new(0.95, 0.95, 0.5, 1.0)) # amarillo claro
             grid.attach(header_label, index, 0, 1, 1)
         end
       
         # Acceder a los datos y mostrar información sobre cada uno
         lista.each_with_index do |item, row_index|
             item.each_with_index do |(key, value), column_index|
-
-                    next if column_index == item.size - 1
-
+                    next if column_index == item.size - 1 #eliminamos columna de id
                     tarea_label = Gtk::Label.new(value.to_s)
                     grid.attach(tarea_label, column_index, row_index + 1, 1, 1)
-                    if row_index % 2 == 0
+                    if row_index % 2 == 0 #si es par --> azul claro , si es impar -->azul oscuro
                         tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.7, 0.7, 1.0, 1.0)) # Azul claro
                     else
-                        tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul más o>
+                        tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul más oscuro
                     end
             end
         end
