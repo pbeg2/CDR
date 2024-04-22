@@ -114,8 +114,7 @@ class MainWindow < Gtk::Window
         @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 0)
 	@table.attach(@button, 3,  4,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
 	@table.attach(@query_entry, 0,  4,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
-	@table.attach(@query_error, 1,  3,  2,  3, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
-		
+	
 	@window.add(@table)
 	    
         # Manejar el evento 'activate' (presionar Enter)
@@ -130,8 +129,9 @@ class MainWindow < Gtk::Window
             when "marks"
                 mostrar_datos_json('http://172.20.10.10:9000/marks', 'marks', ['Subject', 'Name', 'Mark'], @table)
             else
-		            @query_error = Gtk::Label.new("Consulta no válida")
-		            @query_error.override_color(:normal, Gdk::RGBA.new(1.0, 0.0, 0.0, 1.0)) #color rojo
+		@query_error = Gtk::Label.new("Consulta no válida")
+		@query_error.override_color(:normal, Gdk::RGBA.new(1.0, 0.0, 0.0, 1.0)) #color rojo
+		@table.attach(@query_error, 1,  3,  2,  3, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)	#se añade el error en la tabla
                 puts "Consulta no válida: #{query}"
             end  
             @query_entry.text = "" # Limpiar el campo de entrada después de la consulta
@@ -149,9 +149,12 @@ class MainWindow < Gtk::Window
         if datos["error"]
             @texto_error = Gtk::Label.new("No hay información")
         end
-        # Obtener la lista correspondiente según el título
+
+	#añadir titulo en la tabla
+        tabla.attach(titulo, 1,  3,  2,  3, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
+	# Obtener la lista correspondiente según el título	
         lista = datos[titulo]
- 
+        
         # Recorremos encabezados y lo añadimos a la ventana como labels
         headers.each_with_index do |encabezado, index|
             header_label = Gtk::Label.new(encabezado)
