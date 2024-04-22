@@ -106,7 +106,18 @@ class MainWindow < Gtk::Window
         @button = Gtk::Button.new(label: 'logout')
         @button.set_size_request(50, 50)
         @button.signal_connect('clicked') { ventana_inicio }
-    
+
+        @table = Gtk::Table.new(20,4,false)
+	@table.set_column_spacing(10) 
+	@table.set_row_spacings(5) 
+
+        @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 0)
+	@table.attach(@button, 3,  4,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
+	@table.attach(@query_entry, 0,  4,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
+	@table.attach(@query_error, 1,  3,  2,  3, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
+		
+	@window.add(@table)
+	    
         # Manejar el evento 'activate' (presionar Enter)
         @query_entry.signal_connect("activate") do
             query = @query_entry.text.strip.downcase
@@ -125,17 +136,6 @@ class MainWindow < Gtk::Window
             end  
             @query_entry.text = "" # Limpiar el campo de entrada después de la consulta
         end
-
-        @table = Gtk::Table.new(20,4,false)
-	      @table.set_column_spacing(10) 
-	      @table.set_row_spacings(5) 
-
-        @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 0)
-	      @table.attach(@button, 3,  4,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
-	      @table.attach(@query_entry, 0,  4,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
-	      @table.attach(@query_error, 1,  3,  2,  3, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
-		
-	      @window.add(@table)
         @window.show_all
     end
 
