@@ -77,7 +77,7 @@ class MainWindow < Gtk::Window
         if (datos["error"] || (student== nil))
             @lcd_controller.escribir_en_lcd("Authentication error please try again.")
             @label.set_markup("Authentication error, please try again.")
-            @frame.override_background_color(:normal, Gdk::RGBA.new(1, 0, 0, 1)) # Color azul
+            @frame.override_background_color(:normal, Gdk::RGBA.new(1, 0, 0, 1)) # Color rojo
 
             puts "Authentication error, please try again."
             @thread.kill if @thread
@@ -89,12 +89,20 @@ class MainWindow < Gtk::Window
         end
     end
 
+    
+       
+    
+
     def ventana_query
         # Empezar timeout
         ip = '172.20.10.10'
         @frame.destroy
         # Mostrar el mensaje en la LCD
         @lcd_controller.escribir_en_lcd_centrado("Welcome #{@nombre}")
+    
+        @table = Gtk::Table.new(2,2,true)
+        @table.set_column_spacing(300)
+        @table.set_row_spacings(10)
 
         @nombre = Gtk::Label.new("Welcome #{@nombre}")
 
@@ -107,43 +115,48 @@ class MainWindow < Gtk::Window
         @button.set_size_request(50, 50)
         @button.signal_connect('clicked') { ventana_inicio }
 
+        @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 10)
+        @table.attach(@button, 1,  2,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10, 10)
+        @table.attach(@query_entry, 0,  2,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 10)
+       
+        
         # Manejar el evento 'activate' (presionar Enter)
         @query_entry.signal_connect("activate") do
             query = @query_entry.text.strip
             url = "http://%s:9000/" % ip + query
             mostrar_datos_json(url)
             @query_entry.text = "" # Limpiar el campo de entrada después de la consulta
+           
+    
         end
 
-
-
-        @table = Gtk::Table.new(2,2,false)
-        @table.set_column_spacing(300)
-        @table.set_row_spacings(5)
-
-        @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 0)
-        @table.attach(@button, 1,  2,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
-        @table.attach(@query_entry, 0,  2,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
-
         @window.add(@table)
-        @window.show_all
+        @window.show_all    
+      
+        
     end
+
 
     def mostrar_datos_json(url)
         # Obtener los datos JSON desde la URL
+        
         uri = URI(url)
         json_content = Net::HTTP.get(uri)
         datos = JSON.parse(json_content)
 
+
         if datos["error"]
-            @texto_error = Gtk::Label.new("Consulta no válida")
             puts "Consulta no valida"
+            @query_incorrecta = true
             return
         end
         titulo = datos.keys.first
 
          if datos[titulo].empty?
-            puts "QUERY VACIA"
+            puts "Query vacia"
+            @query_vacia = true
+           
+            
             return
         end
 
@@ -152,6 +165,7 @@ class MainWindow < Gtk::Window
 
         # Obtener la lista correspondiente según el título
         lista = datos[titulo]
+
 
         # Crear la ventana para mostrar los datos
         ventana = Gtk::Window.new
@@ -163,28 +177,30 @@ class MainWindow < Gtk::Window
         grid.set_row_spacing(5)
         grid.set_column_spacing(5)
 
-         ventana.add(grid)
+        ventana.add(grid)
 
         # Encabezados
         headers.each_with_index do |encabezado, index|
             header_label = Gtk::Label.new(encabezado)
             header_label.override_background_color(:normal, Gdk::RGBA.new(0.95, 0.95, 0.5, 1.0)) # amarillo
             grid.attach(header_label, index, 0, 1, 1)
+            header_label.hexpand = true
         end
 
         # Acceder a los datos y mostrar información sobre cada uno
         lista.each_with_index do |item, row_index|
             item.each_with_index do |(key, value), column_index|
 
-                    next if column_index == item.size - 1
+                next if column_index == item.size - 1
 
-                    tarea_label = Gtk::Label.new(value.to_s)
-                    grid.attach(tarea_label, column_index, row_index + 1, 1, 1)
-                    if row_index % 2 == 0
-                        tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.7, 0.7, 1.0, 1.0)) # Azul claro
-                    else
-                        tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul
-                    end
+                tarea_label = Gtk::Label.new(value.to_s)
+                grid.attach(tarea_label, column_index, row_index + 1, 1, 1)
+                tarea_label.hexpand = true
+                if row_index % 2 == 0
+                    tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.7, 0.7, 1.0, 1.0)) # Azul claro
+                else
+                    tarea_label.override_background_color(:normal, Gdk::RGBA.new(0.5, 0.5, 1.0, 1.0)) # Azul
+                end
             end
         end
 
