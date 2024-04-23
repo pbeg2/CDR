@@ -20,10 +20,7 @@ class MainWindow < Gtk::Window
             @thread.kill if @thread #Detiene la ejecución del thread
             Gtk.main_quit
         end 
-
         ventana_inicio # Crear el contenido de la ventana_inicio
-        
-
     end   
 
     def ventana_inicio
