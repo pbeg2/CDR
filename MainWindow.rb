@@ -69,9 +69,7 @@ class MainWindow < Gtk::Window
     def autenticacion(uid)
 
         uri = URI("http://172.20.10.10:9000/students?student_id=#{uid}")
-        puts "prueba antes de hacer el response"
         response = Net::HTTP.get(uri)
-        puts "prueba despues del response"
         datos = JSON.parse(response)
         student = datos["students"].first
 
@@ -120,14 +118,14 @@ class MainWindow < Gtk::Window
 
 
         @table = Gtk::Table.new(2,2,false)
-                @table.set_column_spacing(300)
-                @table.set_row_spacings(5)
+        @table.set_column_spacing(300)
+        @table.set_row_spacings(5)
 
         @table.attach(@nombre, 0,  1,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 10 , 0)
-                @table.attach(@button, 1,  2,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
-                @table.attach(@query_entry, 0,  2,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
+        @table.attach(@button, 1,  2,  0,  1, Gtk::AttachOptions::SHRINK, Gtk::AttachOptions::SHRINK, 30, 10)
+        @table.attach(@query_entry, 0,  2,  1,  2, Gtk::AttachOptions::FILL, Gtk::AttachOptions::EXPAND, 10, 0)
 
-                @window.add(@table)
+        @window.add(@table)
         @window.show_all
     end
 
@@ -150,7 +148,7 @@ class MainWindow < Gtk::Window
         end
 
         headers = datos[titulo][0].keys
-        headers = headers.pop
+        headers.pop
 
         # Obtener la lista correspondiente según el título
         lista = datos[titulo]
